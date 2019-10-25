@@ -1,10 +1,10 @@
-import { IErrorMapper } from './IErrorMapper'
+import { ErrorMapper } from './IErrorMapper'
 import { ProblemDocument } from 'http-problem-details'
 import { StatusCodeErrorMapper } from './StatusCodeErrorMapper'
 
-export class DefaultErrorMapper implements IErrorMapper {
+export class DefaultErrorMapper extends ErrorMapper {
   public constructor () {
-    this.error = Error.name
+    super(Error)
   }
   public mapError (error: Error): ProblemDocument {
     return StatusCodeErrorMapper.mapStatusCode(500)
