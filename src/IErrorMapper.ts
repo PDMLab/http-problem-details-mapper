@@ -1,19 +1,24 @@
 import { ProblemDocument } from 'http-problem-details'
 
+type ErrorConstructor = new (...args: any[]) => Error
 export interface IErrorMapper {
-  error: string
+  readonly error: string
   mapError(error: Error): ProblemDocument
 }
 
 export class ErrorMapper implements IErrorMapper {
-  public error: string;
-  public constructor () {
+  public readonly error: string;
+  public constructor (ErrorType?: ErrorConstructor) {
     if (this.constructor === ErrorMapper) {
       throw new TypeError('Can not construct abstract class.')
     }
 
     if (this.mapError === ErrorMapper.prototype.mapError) {
       throw new TypeError(`Please implement abstract method 'mapError' in ${this.constructor.name}.`)
+    }
+
+    if (ErrorType) {
+      this.error = ErrorType.name
     }
   }
 

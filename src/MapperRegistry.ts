@@ -26,6 +26,6 @@ export class MapperRegistry {
   }
 
   public getMapper (error: Error): IErrorMapper {
-    return this.mappers.find((mapper): boolean => mapper.error === error.name)
+    return this.mappers.find((mapper): boolean => mapper.error === error.constructor.name)
   }
 }
