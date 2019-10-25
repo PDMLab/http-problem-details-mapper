@@ -1,5 +1,6 @@
 import 'should'
-import { DefaultErrorMapper } from '../src'
+import { DefaultErrorMapper, ErrorMapper } from '../src'
+import { ProblemDocument } from 'http-problem-details'
 
 describe('Error Mappers', (): void => {
   describe('When mapping an Error', (): void => {
@@ -12,5 +13,18 @@ describe('Error Mappers', (): void => {
       problem.type.should.equal('about:blank')
       return done()
     })
+  })
+
+  it('should set error property from type name', (): void => {
+    class TestError extends Error {}
+    class TestMapper extends ErrorMapper {
+      public mapError (): ProblemDocument {
+        return new ProblemDocument({})
+      }
+    }
+
+    const mapper = new TestMapper(TestError)
+
+    mapper.error.should.equal('TestError')
   })
 })
