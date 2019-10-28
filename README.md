@@ -30,31 +30,36 @@ There's already a mapping middleware available for `express`: `express-http-prob
 - `MappingStrategy` which has a `MapperRegistry` containing the `ErrorMapper` instances
 - The `ErrorMapper` itself maps an object (typically one of your `Error` types) to a `ProblemDocument`
 
-### TypeScript
+### Example
 
-The typical workflow in TypeScript with `http-problem-details-mapper` is this:
+The typical workflow with `http-problem-details-mapper` is this:
 
 First, you implement an Error
 
-```typescript
+```js
 class NotFoundError extends Error {
-  public constructor (options: { type: string, id: string }) {
+  constructor (options) {
     const { type, id } = options
     super()
     Error.captureStackTrace(this, this.constructor)
-    this.name = 'NotFoundError'
+
     this.message = `${type} with id ${id} could not be found.`
   }
 }
 ```
 
-Next, you implement an `IErrorMapper` (noticed we cheated? Instead of the `ErrorMapper` class, in TypeScript you can use an `interface`):
+Next, you implement an `ErrorMapper` (in TypeScript you can use an `IErrorMapper` interface to implement a mapper from scratch):
 
-```typescript
-class NotFoundErrorMapper implements IErrorMapper {
-  public error: string = NotFoundError.name;
+```js
+import { ErrorMapper } from 'http-problem-details-mapper'
+import { ProblemDocument } from 'http-problem-details'
 
-  public mapError (error: Error): ProblemDocument {
+class NotFoundErrorMapper extends ErrorMapper {
+  constructor () {
+    super(NotFoundError)
+  }
+
+  mapError (error) {
     return new ProblemDocument({
       status: 404,
       title: error.message,
@@ -66,15 +71,13 @@ class NotFoundErrorMapper implements IErrorMapper {
 
 Then, create the `IMappingStrategy` implementation:
 
-```typescript
-class MyMappingStrategy implements IMappingStrategy {
-  public registry: MapperRegistry;
-
-  public constructor (registry: MapperRegistry) {
+```js
+class MyMappingStrategy {
+  constructor (registry) {
     this.registry = registry
   }
 
-  public map (error: Error): ProblemDocument {
+  map (error) {
     const err = error
     const errorMapper = this.registry.getMapper(error)
     if (errorMapper) {
@@ -86,7 +89,9 @@ class MyMappingStrategy implements IMappingStrategy {
 
 Finally, create an instance of `MyMappingStrategy` and map an registered error type.
 
-```typescript
+```js
+import { MapperRegistry } from 'http-problem-details-mapper'
+
 const strategy = new MyMappingStrategy(
     new MapperRegistry()
       .registerMapper(new NotFoundErrorMapper()))
@@ -111,92 +116,9 @@ The result will be like this:
 
 There's another mapper named `StatusCodeErrorMapper` which simply acts as a factory for `ProblemDocuments` where you only want to provide an HTTP error status code:
 
-```typescript
-const problem = StatusCodeErrorMapper.mapStatusCode(400)
-```
-
-### JavaScript / ES2015
-
-The typical workflow in JavaScript/ES2015 with `http-problem-details-mapper` is this:
-
-First, you implement an Error
-
 ```js
-class NotFoundError extends Error {
-  constructor (options) {
-    const { type, id } = options
-    super()
-    Error.captureStackTrace(this, this.constructor)
-    this.name = 'NotFoundError'
-    this.message = `${type} with id ${id} could not be found.`
-  }
-}
-```
+import { StatusCodeErrorMapper } from 'http-problem-details-mapper'
 
-Next, you extend the  `ErrorMapper` class:
-
-```js
-class NotFoundErrorMapper extends ErrorMapper {
-  constructor() {
-    this.error = NotFoundError.name;
-  }
-
-  mapError (error) {
-    return new ProblemDocument({
-      status: 404,
-      title: error.message,
-      type: 'http://tempuri.org/NotFoundError'
-    })
-  }
-}
-```
-
-Then, create the `MappingStrategy` implementation:
-
-```js
-class MyMappingStrategy extends MappingStrategy {
-  constructor (registry) {
-    this.registry = registry
-  }
-
-  map (error) {
-    const err = error
-    const errorMapper = this.registry.getMapper(error)
-    if (errorMapper) {
-      return errorMapper.mapError(err)
-    }
-  }
-}
-```
-
-Finally, create an instance of `MyMappingStrategy` and map an registered error type.
-
-```js
-const strategy = new MyMappingStrategy(
-    new MapperRegistry()
-      .registerMapper(new NotFoundErrorMapper()))
-
-const error = new NotFoundError({ type: 'customer', id: '123' })
-const problem = strategy.map()
-
-console.log(problem)
-```
-
-The result will be like this:
-
-```json
-{
-    "status": 404,
-    "title": "customer with id 123 could not be found.",
-    "type": "http://tempuri.org/NotFoundError"
-}
-```
-
-`MapperRegistry` also by default has a mapper named `DefaultErrorMapper` which maps generic `Error` instances to HTTP status code 500 problem documents. `MapperRegistry` also has an option `useDefaultErrorMapper` of type `boolean` which allows you to disable the `DefaultErrorMapper` so you can register your own `ErrorMapper` for `Error`.
-
-There's another mapper named `StatusCodeErrorMapper` which simply acts as a factory for `ProblemDocuments` where you only want to provide an HTTP error status code:
-
-```js
 const problem = StatusCodeErrorMapper.mapStatusCode(400)
 ```
 
