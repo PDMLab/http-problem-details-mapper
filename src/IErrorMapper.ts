@@ -3,7 +3,7 @@ import { ProblemDocument } from 'http-problem-details'
 type ErrorConstructor = new (...args: any[]) => Error
 export interface IErrorMapper {
   readonly error: string
-  mapError(error: Error): ProblemDocument | null
+  mapError(error: Error): ProblemDocument
 }
 
 export abstract class ErrorMapper implements IErrorMapper {
@@ -20,5 +20,5 @@ export abstract class ErrorMapper implements IErrorMapper {
     this.error = ErrorType.name
   }
 
-  public abstract mapError (error: Error): ProblemDocument | null
+  public abstract mapError (error: Error): ProblemDocument
 }

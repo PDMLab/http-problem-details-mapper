@@ -1,12 +1,12 @@
 import 'should'
-import { DefaultErrorMapper, ErrorMapper, IErrorMapper } from '../src'
+import { DefaultErrorMapper, ErrorMapper } from '../src'
 import { ProblemDocument } from 'http-problem-details'
 
 describe('Error Mappers', (): void => {
   describe('When mapping an Error', (): void => {
     it('should create Internal Server Error Problem Document', (done): void => {
-      const mapper: IErrorMapper = new DefaultErrorMapper()
-      const problem = mapper.mapError(new Error(`There's a problem...`))!
+      const mapper = new DefaultErrorMapper()
+      const problem = mapper.mapError(new Error(`There's a problem...`))
 
       problem.status.should.equal(500)
       problem.title.should.equal('Internal Server Error')
