@@ -31,7 +31,7 @@ describe('MapperRegistry', (): void => {
       .registerMapper(new FooErrorMapper())
       .registerMapper(new BarErrorMapper())
 
-    const mapper = registry.getMapper(new FooError())
+    const mapper = registry.getMapper(new FooError())!
 
     mapper.should.be.instanceOf(FooErrorMapper)
   })
@@ -40,7 +40,7 @@ describe('MapperRegistry', (): void => {
     const registry = new MapperRegistry()
       .registerMapper(new FooErrorMapper())
 
-    const mapper = registry.getMapper(new ChildFooError())
+    const mapper = registry.getMapper(new ChildFooError())!
 
     mapper.should.be.instanceOf(FooErrorMapper)
   })
@@ -49,7 +49,7 @@ describe('MapperRegistry', (): void => {
     const registry = new MapperRegistry()
       .registerMapper(new BarErrorMapper())
 
-    const mapper = registry.getMapper(new ChildFooError())
+    const mapper = registry.getMapper(new ChildFooError())!
 
     mapper.should.be.instanceOf(DefaultErrorMapper)
   })

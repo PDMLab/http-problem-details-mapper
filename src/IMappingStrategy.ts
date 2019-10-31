@@ -6,9 +6,9 @@ export interface IMappingStrategy {
   map(error: Error): ProblemDocument
 }
 
-export class MappingStrategy implements IMappingStrategy {
-  public registry: MapperRegistry;
-  public constructor () {
+export abstract class MappingStrategy implements IMappingStrategy {
+  public abstract registry: MapperRegistry;
+  protected constructor () {
     if (this.constructor === MappingStrategy) {
       throw new TypeError('Can not construct abstract class.')
     }
