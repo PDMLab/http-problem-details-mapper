@@ -6,7 +6,9 @@ export class DefaultErrorMapper extends ErrorMapper {
   public constructor () {
     super(Error)
   }
-  public mapError (): ProblemDocument | null {
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public mapError (_: Error): ProblemDocument {
     return StatusCodeErrorMapper.mapStatusCode(500)
   }
 }
