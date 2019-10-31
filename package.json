@@ -33,6 +33,12 @@
     "api"
   ],
   "author": "Alexander Zeitler <alexander.zeitler@pdmlab.com>",
+  "contributors": [
+    {
+      "name": "Tomasz Pluskiewicz",
+      "url": "https://t-code.pl/"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/PDMLab/http-problem-details-mapper/issues"
