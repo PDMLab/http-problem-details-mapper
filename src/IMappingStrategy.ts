@@ -18,8 +18,5 @@ export abstract class MappingStrategy implements IMappingStrategy {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,handle-callback-err
-  public map (error: Error): ProblemDocument {
-    throw new TypeError(`Do not call abstract method 'map' from child.`)
-  };
+  public abstract map (error: Error): ProblemDocument
 }

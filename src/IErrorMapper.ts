@@ -20,8 +20,5 @@ export abstract class ErrorMapper implements IErrorMapper {
     this.error = ErrorType.name
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,handle-callback-err
-  public mapError (error: Error): ProblemDocument | null {
-    throw new TypeError(`Do not call abstract method 'mapError' from child.`)
-  }
+  public abstract mapError (error: Error): ProblemDocument | null
 }
