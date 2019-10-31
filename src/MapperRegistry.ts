@@ -26,6 +26,20 @@ export class MapperRegistry {
   }
 
   public getMapper (error: Error): IErrorMapper {
-    return this.mappers.find((mapper): boolean => mapper.error === error.constructor.name)
+    let constructor = error.constructor
+    let proto = Object.getPrototypeOf(error)
+    let mapper
+
+    while (constructor.name !== 'Object') {
+      mapper = this.mappers.find((mapper): boolean => mapper.error === constructor.name)
+      if (mapper) {
+        break
+      } else {
+        proto = Object.getPrototypeOf(proto)
+        constructor = proto.constructor
+      }
+    }
+
+    return mapper
   }
 }
