@@ -3,7 +3,7 @@ import { ProblemDocument } from 'http-problem-details'
 
 export interface IMappingStrategy {
   registry: MapperRegistry
-  map(error: Error): ProblemDocument | null
+  map(error: Error): ProblemDocument
 }
 
 export abstract class MappingStrategy implements IMappingStrategy {
@@ -18,5 +18,5 @@ export abstract class MappingStrategy implements IMappingStrategy {
     }
   }
 
-  public abstract map (error: Error): ProblemDocument | null
+  public abstract map (error: Error): ProblemDocument
 }

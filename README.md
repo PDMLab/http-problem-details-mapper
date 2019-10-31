@@ -85,6 +85,9 @@ class MyMappingStrategy {
     if (errorMapper) {
       return errorMapper.mapError(err)
     }
+    
+    // alternatively, return a generic problem document
+    throw new Error('Could not map error')
   }
 }
 ```
