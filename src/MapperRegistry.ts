@@ -1,8 +1,8 @@
 import { IErrorMapper } from './IErrorMapper'
 import { DefaultErrorMapper } from './DefaultErrorMapper'
 
-class MapperRegistryOptions {
-  public useDefaultErrorMapper: boolean;
+interface MapperRegistryOptions {
+  useDefaultErrorMapper: boolean
 }
 
 export class MapperRegistry {
@@ -25,7 +25,7 @@ export class MapperRegistry {
     return this
   }
 
-  public getMapper (error: Error): IErrorMapper {
+  public getMapper (error: Error): IErrorMapper | null {
     let constructor = error.constructor
     let proto = Object.getPrototypeOf(error)
     let mapper
@@ -40,6 +40,6 @@ export class MapperRegistry {
       }
     }
 
-    return mapper
+    return mapper || null
   }
 }

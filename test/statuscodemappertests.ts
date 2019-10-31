@@ -3,7 +3,7 @@ import 'should'
 
 describe('error status code mapper', (): void => {
   describe('When mapping 400 status code', (): void => {
-    const document = StatusCodeErrorMapper.mapStatusCode(400)
+    const document = StatusCodeErrorMapper.mapStatusCode(400)!
 
     it('should create Bad Request Problem with status code 400', (done): void => {
       document.status.should.equal(400)
@@ -11,7 +11,7 @@ describe('error status code mapper', (): void => {
     })
 
     it('should create Bad Request Problem with about:blank type', (done): void => {
-      document.type.should.equal('about:blank')
+      document.should.have.property('type', 'about:blank')
       return done()
     })
 

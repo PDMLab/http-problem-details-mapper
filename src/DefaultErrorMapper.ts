@@ -6,7 +6,7 @@ export class DefaultErrorMapper extends ErrorMapper {
   public constructor () {
     super(Error)
   }
-  public mapError (): ProblemDocument {
+  public mapError (): ProblemDocument | null {
     return StatusCodeErrorMapper.mapStatusCode(500)
   }
 }
