@@ -127,6 +127,23 @@ import { StatusCodeErrorMapper } from 'http-problem-details-mapper'
 const problem = StatusCodeErrorMapper.mapStatusCode(400)
 ```
 
+Similar to the `DefaultErrorMapper` there's also a `DefaultMappingStrategy` which you can use if you have no specific requirements regarding the mapping behavior.
+
+It can be used like this:
+
+```js
+import { MapperRegistry, DefaultMappingStrategy } from 'http-problem-details-mapper'
+
+const strategy = new DefaultMappingStrategy(
+    new MapperRegistry()
+      .registerMapper(new NotFoundErrorMapper()))
+
+const error = new NotFoundError({ type: 'customer', id: '123' })
+const problem = strategy.map()
+
+console.log(problem)
+```
+
 ## Running the tests
 
 ```
