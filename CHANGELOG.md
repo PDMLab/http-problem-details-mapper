@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/PDMLab/http-problem-details-mapper/compare/v0.1.3...v0.1.4) (2019-11-18)
+
+
+### Features
+
+* introduce default mapping strategy ([cee321c](https://github.com/PDMLab/http-problem-details-mapper/commit/cee321c53d83e7bf45533176dfc50643c588603d))
+
 ### [0.1.3](https://github.com/PDMLab/http-problem-details-mapper/compare/v0.1.2...v0.1.3) (2019-10-31)
 
 ### [0.1.2](https://github.com/PDMLab/http-problem-details-mapper/compare/v0.1.1...v0.1.2) (2019-10-31)
