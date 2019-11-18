@@ -3,7 +3,7 @@ import { IMappingStrategy } from './IMappingStrategy'
 import { MapperRegistry } from './MapperRegistry'
 
 export class DefaultMappingStrategy implements IMappingStrategy {
-  public registry: MapperRegistry
+  public readonly registry: MapperRegistry
 
   public constructor (registry: MapperRegistry) {
     this.registry = registry
