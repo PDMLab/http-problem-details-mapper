@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/PDMLab/http-problem-details-mapper/compare/v0.1.5...v0.1.6) (2019-11-28)
+
+
+### Bug Fixes
+
+* handle status or code which are not numbers ([f37f558](https://github.com/PDMLab/http-problem-details-mapper/commit/f37f558689998fd065c4e62151f3fc7249fcd33f))
+
 ### [0.1.5](https://github.com/PDMLab/http-problem-details-mapper/compare/v0.1.4...v0.1.5) (2019-11-28)
 
 
