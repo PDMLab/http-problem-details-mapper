@@ -2,13 +2,17 @@ import { ErrorMapper } from './IErrorMapper'
 import { ProblemDocument } from 'http-problem-details'
 import { StatusCodeErrorMapper } from './StatusCodeErrorMapper'
 
+type CommonError = Error & {
+  status?: number
+  code?: number
+}
+
 export class DefaultErrorMapper extends ErrorMapper {
   public constructor () {
     super(Error)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public mapError (_: Error): ProblemDocument {
-    return StatusCodeErrorMapper.mapStatusCode(500)
+  public mapError (error: CommonError): ProblemDocument {
+    return StatusCodeErrorMapper.mapStatusCode(error.status || error.code || 500)
   }
 }
