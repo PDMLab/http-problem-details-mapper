@@ -63,7 +63,7 @@
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "should": "^13.2.3",
-    "standard-version": "^7.1.0",
+    "standard-version": "^8.0.1",
     "ts-jest": "^25.2.1",
     "typescript": "^3.4.4"
   },
