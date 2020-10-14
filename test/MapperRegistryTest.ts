@@ -53,4 +53,15 @@ describe('MapperRegistry', (): void => {
 
     mapper.should.be.instanceOf(DefaultErrorMapper)
   })
+
+  it('does not replace existing mapper', () => {
+    const mapperBefore = new FooErrorMapper()
+    const registry = new MapperRegistry()
+      .registerMapper(mapperBefore)
+
+    const mapperAfter = new FooErrorMapper()
+    const mapper = registry.registerMapper(mapperAfter).getMapper(new FooError())!
+
+    mapper.should.be.exactly(mapperBefore)
+  })
 })

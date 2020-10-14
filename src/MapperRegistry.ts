@@ -6,7 +6,7 @@ interface MapperRegistryOptions {
 }
 
 export class MapperRegistry {
-  private mappers: IErrorMapper[] = [];
+  private mappers: Map<string,IErrorMapper> = new Map();
 
   public constructor (options?: MapperRegistryOptions) {
     let useDefaultErrorMapper = true
@@ -14,13 +14,13 @@ export class MapperRegistry {
       useDefaultErrorMapper = false
     }
     if (useDefaultErrorMapper) {
-      this.mappers.push(new DefaultErrorMapper())
+      this.registerMapper(new DefaultErrorMapper())
     }
   }
 
   public registerMapper (mapper: IErrorMapper): MapperRegistry {
-    if (!this.mappers.some((m): boolean => m.error === mapper.error)) {
-      this.mappers.push(mapper)
+    if (!this.mappers.has(mapper.error)) {
+      this.mappers.set(mapper.error, mapper)
     }
     return this
   }
@@ -31,7 +31,7 @@ export class MapperRegistry {
     let mapper
 
     while (constructor.name !== 'Object') {
-      mapper = this.mappers.find((mapper): boolean => mapper.error === constructor.name)
+      mapper = this.mappers.get(constructor.name)
       if (mapper) {
         break
       } else {
