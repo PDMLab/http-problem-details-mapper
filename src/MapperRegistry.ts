@@ -18,8 +18,8 @@ export class MapperRegistry {
     }
   }
 
-  public registerMapper (mapper: IErrorMapper): MapperRegistry {
-    if (!this.mappers.has(mapper.error)) {
+  public registerMapper (mapper: IErrorMapper, replace = false): MapperRegistry {
+    if (replace || !this.mappers.has(mapper.error)) {
       this.mappers.set(mapper.error, mapper)
     }
     return this
