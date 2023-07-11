@@ -47,7 +47,7 @@
     "http-problem-details": "^0.1.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
+    "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^11.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^10.14.5",
